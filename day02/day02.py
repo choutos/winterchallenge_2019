@@ -26,7 +26,6 @@ intcode = [1,0,0,3,1,1,2,3,1,3,4,3,1,5,0,3,2,9,1,19,1,19,5,23,1,23,5,27,2,27,10,
 
 def computer(intcode: list) -> list:
     pos = 0
-    
     while intcode[pos] != 99:
         (opcode, num1, num2, target) = intcode[pos], intcode[pos+1], intcode[pos+2], intcode[pos+3]
         if opcode == 1:
@@ -38,13 +37,22 @@ def computer(intcode: list) -> list:
         pos +=4
     return intcode
 
-def alarm(intcode: list) -> list:
-    intcode[1] = 12
-    intcode[2] = 2
+def alarm(incode: list, noun: int = 12, verb: int = 2) -> list:
+    intcode[1] = noun
+    intcode[2] = verb
     new_code = computer(intcode)
     return new_code[0]
+
+def reverse(target, incode):
+    for noun in range(len(intcode)):
+        for verb in range(len(intcode)):
+            result = alarm(intcode, noun, verb)
+            if result == target:
+                return target
+
     
-print(alarm(intcode))
+#print(alarm(intcode))
+print(reverse(19690720,intcode))
 assert computer([1,0,0,0,99]) == [2,0,0,0,99]
 assert computer([2,3,0,3,99]) == [2,3,0,6,99]
 assert computer([2,4,4,5,99,0]) == [2,4,4,5,99,9801]
